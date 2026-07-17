@@ -1,2 +1,2 @@
-# Learn-LLM-from-Scratch-to-Production
+# Learn LLM from Scratch to Production
  ২০২৩-২৬ সালের মধ্যে LLM (Large Language Model) নিয়ে কাজ করা মানুষের সংখ্যা বেড়েছে দ্রুত, কিন্তু তাদের বেশিরভাগই একটা নির্দিষ্ট স্তরে আটকে থাকেন — API call করতে পারেন, prompt লিখতে পারেন, কিন্তু মডেলটা ভেতরে আসলে কী করছে, কেন একটা fine-tune কাজ করল বা করল না, একটা agent কেন loop-এ আটকে গেল — এসব প্রশ্নের উত্তর তাদের কাছে থাকে না। 
