@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Learn LLM from Scratch to Production — 168-Day Journey</title>
-<meta name="description" content="A day-by-day progress tracker for the LLM Engineer roadmap. Progress saved locally in your browser.">
+<title>Learn LLM from Scratch to Production (C# / .NET 10 Edition) — 168-Day Journey</title>
+<meta name="description" content="A day-by-day progress tracker for the C# / .NET 10 edition of the LLM Engineer roadmap. Progress saved locally in your browser.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -19,8 +19,8 @@
     --text:#edecf2;
     --text-dim:#9096ab;
     --text-faint:#5c6377;
-    --accent:#4fd1c5;
-    --accent-dim:#2f5b56;
+    --accent:#a78bfa;
+    --accent-dim:#4b3b7a;
     --gold:#e8a33d;
     --radius:12px;
     --radius-sm:8px;
@@ -264,9 +264,9 @@
 <div class="wrap">
 
   <header class="top">
-    <p class="eyebrow">Day 1 → Day 168</p>
+    <p class="eyebrow">C# / .NET 10 Edition · Day 1 → Day 168</p>
     <h1 class="title">Learn LLM from Scratch to Production</h1>
-    <p class="subtitle">The 168-day journey to becoming an LLM Engineer — track your daily progress here. Check off work as you finish it, and the curve moves forward on its own.</p>
+    <p class="subtitle">The 168-day journey to becoming an LLM Engineer on .NET — build it in C#, with TorchSharp, ONNX Runtime GenAI and the official MCP SDK. Track your daily progress here. Check off work as you finish it, and the curve moves forward on its own.</p>
     <p class="notice" id="storage-notice">This tracker saves your progress in your browser's <strong>localStorage</strong> — no data goes to any server. It works fully once published on GitHub Pages. We recommend <em>exporting</em> a backup regularly, since clearing browser data can erase your progress.</p>
   </header>
 
@@ -300,7 +300,7 @@
   <main id="content"></main>
 
   <footer>
-    <p>Companion tracker for the <strong>LLM Engineer 168-Day Roadmap</strong> ebook. Progress is stored only in this browser (localStorage) — no account, no server.</p>
+    <p>Companion tracker for the <strong>LLM Engineer 168-Day Roadmap</strong> ebook (C# / .NET 10 edition). Progress is stored only in this browser (localStorage) — no account, no server.</p>
   </footer>
 
 </div>
@@ -310,52 +310,52 @@
   "use strict";
 
   var PHASES = [
-    {id:1, name:"Neural Network Foundations", color:"#4fd1c5"},
-    {id:2, name:"Tokenization & Pretraining", color:"#5fa8d3"},
-    {id:3, name:"Application & Agent Dev", color:"#8c7ae6"},
-    {id:4, name:"Fine-tuning & Customization", color:"#e8a33d"},
+    {id:1, name:"Foundations (pure C#)", color:"#4fd1c5"},
+    {id:2, name:"Tokenization & Pretraining (pure C#)", color:"#5fa8d3"},
+    {id:3, name:"Application & Agent Dev (.NET)", color:"#8c7ae6"},
+    {id:4, name:"Fine-tuning (TorchSharp & ONNX)", color:"#e8a33d"},
     {id:5, name:"Capabilities — MCP & Memory", color:"#e0708a"},
     {id:6, name:"Production & Portfolio", color:"#6fcf97"}
   ];
 
   var WEEK_TITLES = [
-    "Backprop & micrograd", "Starting Language Modeling (makemore 1-2)", "Training Dynamics (makemore 3-4)", "Building GPT by Hand",
-    "Tokenizer", "Training with nanoGPT", "Training in Depth", "Modern Architecture",
-    "API & Prompt Engineering", "Tool Use & Agent Loop", "RAG from Scratch", "First Production Product",
-    "Hugging Face Ecosystem", "LoRA/QLoRA Hands-on", "Alignment & Inference Optimization", "Fine-tuning Capstone",
-    "MCP (Model Context Protocol)", "Advanced Agent Architecture", "Memory Systems", "Capabilities Capstone",
-    "Model Serving", "Evals & Observability", "Safety & Security", "Final Capstone & Career"
+    "Backprop & micrograd in C#", "Starting Language Modeling (makemore 1-2)", "Training Dynamics (makemore 3-4)", "Building GPT by Hand in C#",
+    "Tokenizer (BPE in C#)", "Pretraining with nanoGPT in C#", "Training in Depth", "Modern Architecture",
+    "LLM APIs & Prompt Engineering (HttpClient)", "Tool Use & Agent Loop", "RAG from Scratch", "First Production Product (ASP.NET Core)",
+    "The .NET Model Ecosystem", "LoRA/QLoRA with TorchSharp", "Alignment & Local Inference", "Fine-tuning Capstone",
+    "MCP with the Official C# SDK", "Advanced Agent Architecture", "Memory Systems", "Capabilities Capstone",
+    "Model Serving", "Evals & Observability (OpenTelemetry .NET)", "Safety & Security", "Final Capstone & Career"
   ];
 
   var DAY_TITLES = [
-    "Environment setup + 3Blue1Brown video 1-2","3Blue1Brown video 3-4 (gradient descent, backprop)","micrograd video — first half","Finish micrograd","Train an MLP with micrograd + push to GitHub","PyTorch tensor basics","Challenge: add a new operation to micrograd",
-    "makemore Part 1 — first half","Finish Part 1, understand NLL","makemore Part 2 (MLP), embeddings","Finish Part 2, hyperparameter tuning","Build your own dataset and run makemore","Keep experimenting","Write notes on what you learned this week",
-    "Part 3 — activations, gradients, BatchNorm","Reproduce Part 3's visualizations","Part 4 — becoming a backprop ninja","Part 4 exercises","Finish Part 4","Consolidation — write it in your own words","Write a blog post",
-    "makemore Part 5 (WaveNet)","Let's build GPT — up through self-attention","Complete the multi-head attention block","Train the full GPT (Shakespeare)","Train on your own dataset","Read The Illustrated Transformer","Read Attention is All You Need",
-    "Start the GPT Tokenizer video","Implement the BPE algorithm yourself","minbpe exercises","Train a tokenizer on your own text","Your tokenizer vs. tiktoken comparison","Turn your tokenizer into a package","Push to GitHub",
-    "Read the nanoGPT repo line by line","Understand config and data pipeline, train on Shakespeare","Prepare your own dataset","Start training on a Colab GPU","Learn to read a training curve","Keep training","Generate samples and check quality",
-    "Mixed precision, gradient accumulation","Read about scaling laws (Chinchilla)","Run a hyperparameter sweep","Experiment tracking with Weights & Biases","Pretraining vs. fine-tuning difference","Improve the model","Write a model card",
-    "Llama architecture — RoPE, RMSNorm, SwiGLU","Understand and implement KV cache","Implement sampling strategies","Relevant chapter of Raschka's book","Build the Phase capstone repo","Write a blog post","Consolidation review",
-    "Claude API quickstart","Read the prompt engineering guide","Structured output, system prompts","Error handling, cost accounting","Reproduce Anthropic Cookbook recipes","Start a mini-project: translator CLI","Finish the translator CLI",
-    "Tool use / function calling — your first tool","Write an agent loop from scratch","Give the agent 3 tools","ReAct pattern, error recovery","Read Lilian Weng's blog post","Start a terminal coding assistant","Finish the coding assistant",
-    "Embeddings, write cosine similarity yourself","Implement chunking strategies","Set up a vector database (Chroma)","Retrieval + synthesis + citation","Hybrid search and reranking","Run a RAG evaluation","Build an eval set",
-    "Start a full-stack RAG app","Keep building the app","Streaming response, chat history","Add an eval harness","Deploy it","Polish + write a README","Make a demo video",
-    "Learn the transformers library","datasets library, chat templates","Local inference with a small open model","Hugging Face NLP course chapters","Full fine-tuning vs. PEFT, the LoRA paper","Prepare an instruction dataset","Check dataset quality",
-    "Your first LoRA fine-tune (PEFT)","QLoRA — fast training with Unsloth","Build a dataset for your own use case","Train — hyperparameter experiments","Evaluation — before vs. after comparison","Improve data quality","Keep iterating",
-    "RLHF overview (the InstructGPT paper)","DPO — a run with the TRL library","Quantization — GGUF, llama.cpp","Serve a model with Ollama","Inference speed benchmark","Consolidation","Write notes",
-    "Start the fine-tuning capstone","Keep working on the capstone","Keep working on the capstone","Eval suite, base model comparison","Publish to the Hugging Face Hub","Write a blog post","Review",
-    "Read modelcontextprotocol.io","Build your first MCP server","Test with Claude Desktop/Code","A real API's MCP integration","Auth, error handling, best practices","Start a genuinely useful MCP server project","Publish it open-source",
-    "Read the Building Effective Agents essay","Planning and task decomposition","Build a multi-agent system","Computer use / browser automation","Agent evaluation — trajectory analysis","Start a real multi-step agent project","Finish the agent project",
-    "Learn context engineering","The MemGPT paper, Letta architecture","Design your own memory layer","Memory extraction pipeline","Memory retrieval + context injection","Add memory to an agent","Test session persistence",
-    "Start the capabilities capstone","Keep working on the capstone","Keep working on the capstone","Finish the capstone","Evaluate it","Ship it","Make a demo video",
-    "Serve a model with vLLM","Throughput/latency benchmark","Cost engineering, prompt caching","Run a load test","Implement model routing","Add serving to the capstone","Review",
-    "Read about eval philosophy","Build your own eval harness","Add logging/tracing","Set up regression testing","Learn the idea of A/B testing","Add eval+monitoring to the capstone","Review",
-    "Understand prompt injection","Implement guardrails","PII handling, data privacy","Test jailbreak resistance","Rate limiting, abuse prevention","Do a security review","Keep reviewing",
-    "Start polishing your portfolio","Keep polishing","Keep polishing","Finish polishing","Set up your GitHub profile","Finalize your blog series","Write your plan going forward"
+    "Install the .NET 10 SDK, create the solution + 3Blue1Brown video 1-2", "3Blue1Brown video 3-4 (gradient descent, backprop)", "micrograd video — build the C# Value class (first half)", "Finish the Value class: operator overloading + Backward()", "Train an MLP with your Value engine + push to GitHub", "Chapter 2 math: numerical vs. analytic derivatives in C#", "Challenge: add a new operation (Exp / Tanh) to your engine",
+    "makemore Part 1 — bigram counts, first half", "Finish Part 1, understand NLL", "makemore Part 2 (MLP), embeddings with your Matrix class", "Finish Part 2, hyperparameter tuning", "Build your own dataset and run makemore in C#", "Keep experimenting", "Write notes on what you learned this week",
+    "Part 3 — activations, gradients, BatchNorm", "Reproduce Part 3's visualizations (print the stats from C#)", "Part 4 — becoming a backprop ninja (manual backprop)", "Part 4 exercises", "Finish Part 4", "Consolidation — write it in your own words", "Write a blog post",
+    "makemore Part 5 (WaveNet)", "Let's build GPT — up through self-attention (Matrix ops)", "Complete the multi-head attention block", "Train the full C# GPT (Shakespeare)", "Train on your own dataset", "Read The Illustrated Transformer", "Read Attention is All You Need",
+    "Start the GPT Tokenizer video", "Implement the BPE algorithm yourself in C#", "minbpe exercises", "Train a tokenizer on your own text", "Compare with Microsoft.ML.Tokenizers (Tiktoken)", "Turn your tokenizer into a reusable class library", "Push to GitHub",
+    "Read the nanoGPT repo, then Chapter 8's C# pipeline line by line", "Understand the config and MemoryMappedFile data pipeline, train on Shakespeare", "Prepare your own dataset", "Start a longer training run with checkpointing", "Learn to read a training curve", "Keep training", "Generate samples and check quality",
+    "Gradient accumulation, warmup + cosine LR decay", "Read about scaling laws (Chinchilla)", "Run a hyperparameter sweep", "Experiment tracking (LocalExperimentTracker or W&B over HTTP)", "Pretraining vs. fine-tuning difference", "Improve the model", "Write a model card",
+    "Llama architecture — RoPE, RMSNorm, SwiGLU", "Understand and implement the KV cache", "Implement sampling strategies", "Relevant chapter of Raschka's book", "Build the Phase capstone repo", "Write a blog post", "Consolidation review",
+    "Anthropic Messages API quickstart with HttpClient", "Read the prompt engineering guide", "Structured output, system prompts (System.Text.Json)", "Error handling, retries, cost accounting", "Reproduce Anthropic Cookbook recipes in C#", "Start a mini-project: translator CLI", "Finish the translator CLI",
+    "Tool use / function calling — your first tool", "Write an agent loop from scratch", "Give the agent 3 tools", "ReAct pattern, error recovery", "Read Lilian Weng's blog post", "Start a terminal coding assistant", "Finish the coding assistant",
+    "Embeddings, write cosine similarity yourself", "Implement chunking strategies", "Set up a vector database (Qdrant.Client)", "Retrieval + synthesis + citation", "Hybrid search (BM25) and reranking", "Run a RAG evaluation", "Build an eval set",
+    "Start a full-stack RAG app with ASP.NET Core Minimal APIs", "Keep building the app", "Streaming responses (SSE), chat history", "Add an eval harness + rate-limiting middleware", "Deploy it", "Polish + write a README", "Make a demo video",
+    "Tour the .NET model ecosystem (ONNX Runtime, TorchSharp, HF Hub REST API)", "Parquet.Net datasets, chat templates", "Local inference with a small ONNX model (ONNX Runtime GenAI)", "Hugging Face NLP course chapters", "Full fine-tuning vs. LoRA, the LoRA paper", "Prepare an instruction dataset", "Check dataset quality",
+    "Your first LoRA fine-tune (TorchSharp LoRALinear)", "QLoRA — understand the .NET gap and the Python-service workaround", "Build a dataset for your own use case", "Train — hyperparameter experiments", "Evaluation — before vs. after comparison", "Improve data quality", "Keep iterating",
+    "RLHF overview (the InstructGPT paper)", "DPO — implement the loss in TorchSharp", "Quantization — ONNX int4/int8, GGUF", "Serve a model with LLamaSharp or Ollama", "Inference speed benchmark", "Consolidation", "Write notes",
+    "Start the fine-tuning capstone", "Keep working on the capstone", "Keep working on the capstone", "Eval suite, base model comparison", "Publish your artifacts (Hugging Face Hub / NuGet)", "Write a blog post", "Review",
+    "Read modelcontextprotocol.io", "Build your first MCP server with the official C# SDK", "Test with Claude Desktop/Code", "A real API's MCP integration", "Auth, error handling, best practices", "Start a genuinely useful MCP server project", "Publish it open-source (NuGet)",
+    "Read the Building Effective Agents essay", "Planning and task decomposition", "Build a multi-agent system (Task.WhenAll workers)", "Computer use / browser automation", "Agent evaluation — trajectory analysis", "Start a real multi-step agent project", "Finish the agent project",
+    "Learn context engineering", "The MemGPT paper, Letta architecture", "Design your own memory layer", "Memory extraction pipeline", "Memory retrieval + context injection", "Add memory to an agent", "Test session persistence",
+    "Start the capabilities capstone", "Keep working on the capstone", "Keep working on the capstone", "Finish the capstone", "Evaluate it", "Ship it", "Make a demo video",
+    "Serve a model — call a vLLM service from .NET (OpenAI-compatible API)", "Throughput/latency benchmark", "Cost engineering, prompt caching", "Run a load test", "Implement model routing", "Add serving to the capstone", "Review",
+    "Read about eval philosophy", "Build your own eval harness ([LlmEval] attributes)", "Add logging/tracing (OpenTelemetry .NET)", "Set up regression testing", "Learn the idea of A/B testing", "Add eval + monitoring to the capstone", "Review",
+    "Understand prompt injection", "Implement guardrails", "PII handling, data privacy", "Test jailbreak resistance", "Rate limiting, abuse prevention", "Do a security review", "Keep reviewing",
+    "Start polishing your portfolio", "Keep polishing", "Keep polishing", "Finish polishing", "Set up your GitHub profile (and NuGet packages)", "Finalize your blog series", "Write your plan going forward"
   ];
 
   var TOTAL = DAY_TITLES.length; // 168
-  var STORAGE_KEY = "llm_learn_from_scratch_progress_v1";
+  var STORAGE_KEY = "llm_learn_from_scratch_csharp_progress_v1";
 
   function weekOf(day){ return Math.ceil(day / 7); }
   function phaseOf(day){ return Math.ceil(weekOf(day) / 4); }
@@ -491,7 +491,7 @@
     var blob = new Blob([JSON.stringify(done, null, 2)], {type:"application/json"});
     var url = URL.createObjectURL(blob);
     var a = document.createElement("a");
-    a.href = url; a.download = "llm-book-progress.json";
+    a.href = url; a.download = "llm-book-csharp-progress.json";
     document.body.appendChild(a); a.click(); document.body.removeChild(a);
     URL.revokeObjectURL(url);
   });
