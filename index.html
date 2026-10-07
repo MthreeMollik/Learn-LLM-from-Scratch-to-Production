@@ -134,6 +134,30 @@
   .btn:hover{border-color:var(--accent); color:var(--text);}
   .btn.primary{color:var(--bg); background:var(--accent); border-color:var(--accent); font-weight:600;}
   .btn.primary:hover{opacity:0.9;}
+
+  .edition-switch{
+    display:inline-flex; align-items:center; gap:8px;
+    font-family:var(--font-body);
+    font-size:13px;
+    font-weight:600;
+    text-decoration:none;
+    color:#fff;
+    background:#6d4fd8;
+    border:1px solid #8b72f0;
+    border-radius:var(--radius-sm);
+    padding:9px 16px;
+    margin-bottom:18px;
+    transition:background .15s, transform .15s;
+  }
+  .edition-switch:hover{background:#7d60eb; transform:translateY(-1px);}
+  .edition-switch .tag{
+    font-family:var(--font-mono);
+    font-size:11px;
+    font-weight:500;
+    background:rgba(255,255,255,0.18);
+    border-radius:4px;
+    padding:1px 6px;
+  }
   input[type=file]{display:none;}
 
   /* ---------- phase tabs ---------- */
@@ -264,6 +288,7 @@
 <div class="wrap">
 
   <header class="top">
+    <a class="edition-switch" href="https://mthreemollik.github.io/Learn-LLM-from-Scratch-to-Production/DotnetCSharp/EnglishVersion/"><span class="tag">C#</span> Go to the C# / .NET edition tracker →</a>
     <p class="eyebrow">Day 1 → Day 168</p>
     <h1 class="title">Learn LLM from Scratch to Production</h1>
     <p class="subtitle">The 168-day journey to becoming an LLM Engineer — track your daily progress here. Check off work as you finish it, and the curve moves forward on its own.</p>
