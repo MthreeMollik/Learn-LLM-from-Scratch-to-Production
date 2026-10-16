@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Learn LLM from Scratch to Production (C# / .NET 10 সংস্করণ) — ১৬৮ দিনের Journey</title>
+<meta name="description" content="C# / .NET 10 সংস্করণের জন্য LLM Engineer roadmap-এর দিন-ভিত্তিক progress tracker। Progress আপনার browser-এই সেভ থাকে।">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#10131c;
+    --bg-2:#0c0e15;
+    --surface:#171b26;
+    --surface-2:#1d2230;
+    --border:#2a3040;
+    --border-soft:#20242f;
+    --text:#edecf2;
+    --text-dim:#9096ab;
+    --text-faint:#5c6377;
+    --accent:#a78bfa;
+    --accent-dim:#4b3b7a;
+    --gold:#e8a33d;
+    --radius:12px;
+    --radius-sm:8px;
+    --font-display:'Space Grotesk', sans-serif;
+    --font-body:'Inter', sans-serif;
+    --font-mono:'JetBrains Mono', monospace;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:
+      linear-gradient(var(--bg-2), var(--bg-2)) fixed,
+      repeating-linear-gradient(0deg, rgba(255,255,255,0.015) 0px, rgba(255,255,255,0.015) 1px, transparent 1px, transparent 28px) fixed,
+      repeating-linear-gradient(90deg, rgba(255,255,255,0.015) 0px, rgba(255,255,255,0.015) 1px, transparent 1px, transparent 28px) fixed,
+      var(--bg);
+    color:var(--text);
+    font-family:var(--font-body);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:var(--accent);}
+  ::selection{background:var(--accent-dim); color:var(--text);}
+  :focus-visible{outline:2px solid var(--accent); outline-offset:2px; border-radius:4px;}
+
+  .wrap{max-width:920px; margin:0 auto; padding:0 20px 80px;}
+
+  /* ---------- header ---------- */
+  header.top{padding:48px 0 8px;}
+  .eyebrow{
+    font-family:var(--font-mono);
+    font-size:12px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--accent);
+    margin:0 0 10px;
+  }
+  h1.title{
+    font-family:var(--font-display);
+    font-weight:700;
+    font-size:clamp(28px, 5vw, 42px);
+    margin:0 0 10px;
+    letter-spacing:-0.01em;
+  }
+  p.subtitle{
+    color:var(--text-dim);
+    max-width:60ch;
+    margin:0 0 6px;
+    font-size:15px;
+  }
+  .notice{
+    font-size:12.5px;
+    color:var(--text-faint);
+    border-left:2px solid var(--border);
+    padding:8px 12px;
+    margin-top:18px;
+    background:var(--surface);
+    border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+  }
+
+  /* ---------- hero / curve ---------- */
+  .hero{
+    background:var(--surface);
+    border:1px solid var(--border-soft);
+    border-radius:var(--radius);
+    padding:24px 24px 12px;
+    margin:28px 0;
+  }
+  .stat-row{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(120px, 1fr));
+    gap:16px;
+    margin-bottom:8px;
+  }
+  .stat{padding:2px 0;}
+  .stat .num{
+    font-family:var(--font-mono);
+    font-size:26px;
+    font-weight:600;
+    color:var(--text);
+  }
+  .stat .lbl{
+    font-size:12px;
+    color:var(--text-faint);
+    margin-top:2px;
+  }
+  .curve-svg{width:100%; height:auto; display:block; margin-top:6px;}
+  .curve-track{fill:none; stroke:var(--border); stroke-width:2;}
+  .curve-fill{fill:none; stroke:var(--accent); stroke-width:2.5; stroke-linecap:round;}
+  .curve-dot{fill:var(--accent);}
+  .curve-dot-ring{fill:none; stroke:var(--accent); stroke-width:1.5; opacity:0.5;}
+  .curve-label{font-family:var(--font-mono); font-size:10px; fill:var(--text-faint);}
+
+  /* ---------- controls ---------- */
+  .controls{
+    display:flex; flex-wrap:wrap; gap:10px; align-items:center;
+    margin:20px 0 8px;
+  }
+  .btn{
+    font-family:var(--font-body);
+    font-size:13px;
+    font-weight:500;
+    color:var(--text-dim);
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:var(--radius-sm);
+    padding:8px 14px;
+    cursor:pointer;
+    transition:border-color .15s, color .15s;
+  }
+  .btn:hover{border-color:var(--accent); color:var(--text);}
+  .btn.primary{color:var(--bg); background:var(--accent); border-color:var(--accent); font-weight:600;}
+  .btn.primary:hover{opacity:0.9;}
+
+  input[type=file]{display:none;}
+
+  /* ---------- phase tabs ---------- */
+  .tabs{
+    display:flex; gap:8px; flex-wrap:wrap;
+    margin:24px 0 4px;
+    padding-bottom:14px;
+    border-bottom:1px solid var(--border-soft);
+  }
+  .tab{
+    font-family:var(--font-mono);
+    font-size:12.5px;
+    padding:7px 12px;
+    border-radius:20px;
+    border:1px solid var(--border);
+    background:transparent;
+    color:var(--text-dim);
+    cursor:pointer;
+    white-space:nowrap;
+  }
+  .tab[data-active="true"]{
+    color:var(--bg);
+    background:var(--tab-color, var(--accent));
+    border-color:var(--tab-color, var(--accent));
+    font-weight:600;
+  }
+
+  /* ---------- phase / week / day list ---------- */
+  .phase-block{margin-top:36px;}
+  .phase-head{
+    display:flex; align-items:baseline; gap:10px;
+    margin-bottom:6px;
+  }
+  .phase-chip{
+    width:9px; height:9px; border-radius:50%;
+    background:var(--phase-color);
+    flex:none;
+  }
+  .phase-head h2{
+    font-family:var(--font-display);
+    font-size:19px;
+    font-weight:600;
+    margin:0;
+  }
+  .phase-progress{
+    font-family:var(--font-mono);
+    font-size:12px;
+    color:var(--text-faint);
+    margin-left:auto;
+  }
+  .phase-bar{
+    height:3px; background:var(--border-soft); border-radius:2px; overflow:hidden;
+    margin:10px 0 18px;
+  }
+  .phase-bar-fill{height:100%; background:var(--phase-color); border-radius:2px; transition:width .3s;}
+
+  .week{margin-bottom:22px;}
+  .week h3{
+    font-family:var(--font-mono);
+    font-size:12px;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+    color:var(--text-faint);
+    margin:0 0 8px;
+    display:flex; gap:8px; align-items:center;
+  }
+  .week h3 .wk-num{color:var(--phase-color);}
+
+  .day-row{
+    display:flex; align-items:flex-start; gap:12px;
+    padding:9px 10px;
+    border-radius:var(--radius-sm);
+    cursor:pointer;
+    transition:background .1s;
+  }
+  .day-row:hover{background:var(--surface);}
+  .day-row[data-done="true"] .day-title{color:var(--text-faint); text-decoration:line-through; text-decoration-color:var(--border);}
+  .day-row[data-done="true"] .day-num{color:var(--accent);}
+
+  .checkbox{
+    flex:none; width:20px; height:20px; margin-top:1px;
+    border:1.5px solid var(--border);
+    border-radius:5px;
+    display:flex; align-items:center; justify-content:center;
+    transition:border-color .15s, background .15s;
+  }
+  .day-row[data-done="true"] .checkbox{background:var(--accent); border-color:var(--accent);}
+  .checkbox svg{width:12px; height:12px; opacity:0; transition:opacity .1s;}
+  .day-row[data-done="true"] .checkbox svg{opacity:1;}
+
+  .day-num{
+    font-family:var(--font-mono);
+    font-size:12.5px;
+    color:var(--text-faint);
+    min-width:52px;
+    padding-top:2px;
+    flex:none;
+  }
+  .day-title{font-size:14px; color:var(--text);}
+
+  .day-row[data-next="true"]{
+    background:var(--surface-2);
+    box-shadow:inset 2px 0 0 var(--phase-color);
+  }
+
+  /* ---------- footer ---------- */
+  footer{
+    margin-top:60px;
+    padding-top:24px;
+    border-top:1px solid var(--border-soft);
+    font-size:12.5px;
+    color:var(--text-faint);
+  }
+  footer a{color:var(--text-dim);}
+
+  @media (max-width:600px){
+    .stat-row{grid-template-columns:repeat(2, 1fr);}
+    .day-num{min-width:44px;}
+  }
+
+  @media (prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto;}
+    *{transition:none !important;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <p class="eyebrow">C# / .NET 10 সংস্করণ · Day 1 → Day 168</p>
+    <h1 class="title">Learn LLM from Scratch to Production</h1>
+    <p class="subtitle">.NET-এ LLM Engineer হয়ে ওঠার ১৬৮ দিনের journey, C#, TorchSharp, ONNX Runtime GenAI আর official MCP SDK দিয়ে — প্রতিদিনের progress এখানে track করুন। কাজ শেষ হলে টিক দিন, curve নিজে থেকে এগিয়ে যাবে।</p>
+    <p class="notice" id="storage-notice">এই ট্র্যাকার আপনার browser-এর <strong>localStorage</strong>-এ progress সংরক্ষণ করে — কোনো সার্ভারে data যায় না। GitHub Pages-এ publish করার পর এটা সম্পূর্ণভাবে কাজ করবে। নিয়মিত <em>Export</em> করে backup রাখার পরামর্শ থাকল, কারণ browser data clear করলে progress মুছে যেতে পারে।</p>
+  </header>
+
+  <section class="hero">
+    <div class="stat-row">
+      <div class="stat"><div class="num" id="stat-count">0 / 168</div><div class="lbl">দিন সম্পন্ন</div></div>
+      <div class="stat"><div class="num" id="stat-pct">0%</div><div class="lbl">মোট progress</div></div>
+      <div class="stat"><div class="num" id="stat-phase">—</div><div class="lbl">বর্তমান phase</div></div>
+      <div class="stat"><div class="num" id="stat-next">Day 1</div><div class="lbl">পরবর্তী কাজ</div></div>
+    </div>
+    <svg class="curve-svg" viewBox="0 0 800 190" id="curve-svg" role="img" aria-label="Training progress curve">
+      <path id="curve-track" class="curve-track" d="M 20 165 C 160 165, 160 95, 280 78 C 400 61, 400 30, 520 22 C 640 15, 660 10, 780 8"/>
+      <path id="curve-fill" class="curve-fill" d="M 20 165 C 160 165, 160 95, 280 78 C 400 61, 400 30, 520 22 C 640 15, 660 10, 780 8"/>
+      <circle id="curve-dot-ring" class="curve-dot-ring" cx="20" cy="165" r="9"/>
+      <circle id="curve-dot" class="curve-dot" cx="20" cy="165" r="4"/>
+      <text x="20" y="185" class="curve-label">Day 1</text>
+      <text x="780" y="185" class="curve-label" text-anchor="end">Day 168</text>
+    </svg>
+  </section>
+
+  <div class="controls">
+    <button class="btn primary" id="btn-jump">পরবর্তী কাজে যান ↓</button>
+    <button class="btn" id="btn-export">Export progress</button>
+    <button class="btn" id="btn-import-label">Import progress</button>
+    <input type="file" id="btn-import" accept="application/json">
+    <button class="btn" id="btn-reset">Reset</button>
+  </div>
+
+  <nav class="tabs" id="tabs"></nav>
+
+  <main id="content"></main>
+
+  <footer>
+    <p><strong>LLM Engineer ১৬৮ দিনের Roadmap</strong> ebook-এর (C# / .NET 10 সংস্করণ) companion tracker। Progress শুধু এই browser-এ (localStorage) সেভ থাকে, কোনো account বা server লাগে না।</p>
+  </footer>
+
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  var PHASES = [
+    {id:1, name:"Foundations (pure C#)", color:"#4fd1c5"},
+    {id:2, name:"Tokenization ও Pretraining (pure C#)", color:"#5fa8d3"},
+    {id:3, name:"Application ও Agent Dev (.NET)", color:"#8c7ae6"},
+    {id:4, name:"Fine-tuning (TorchSharp ও ONNX)", color:"#e8a33d"},
+    {id:5, name:"Capabilities — MCP ও Memory", color:"#e0708a"},
+    {id:6, name:"Production ও Portfolio", color:"#6fcf97"}
+  ];
+
+  var WEEK_TITLES = [
+    "Backprop ও micrograd (C#-এ)", "Language Modeling শুরু (makemore 1-2)", "Training Dynamics (makemore 3-4)", "নিজ হাতে C#-এ GPT",
+    "Tokenizer (C#-এ BPE)", "C#-এ nanoGPT দিয়ে Pretraining", "Training গভীরে", "Modern Architecture",
+    "LLM API ও Prompt Engineering (HttpClient)", "Tool Use ও Agent Loop", "RAG from Scratch", "প্রথম Production Product (ASP.NET Core)",
+    ".NET Model Ecosystem", "TorchSharp দিয়ে LoRA/QLoRA", "Alignment ও Local Inference", "Fine-tuning Capstone",
+    "Official C# SDK দিয়ে MCP", "Advanced Agent Architecture", "Memory Systems", "Capabilities Capstone",
+    "Model Serving", "Evals ও Observability (OpenTelemetry .NET)", "Safety ও Security", "Final Capstone ও Career"
+  ];
+
+  var DAY_TITLES = [
+    ".NET 10 SDK install, solution তৈরি + 3Blue1Brown video 1-2", "3Blue1Brown video 3-4 (gradient descent, backprop)", "micrograd video — C#-এ Value class (প্রথম অর্ধেক)", "Value class শেষ: operator overloading + Backward()", "নিজের Value engine দিয়ে MLP train + GitHub push", "Chapter 2 math: C#-এ numerical vs analytic derivative", "Challenge: engine-এ নতুন operation (Exp / Tanh) যোগ",
+    "makemore Part 1 — bigram count, প্রথম অর্ধেক", "makemore Part 1 শেষ, NLL বুঝুন", "makemore Part 2 (MLP), নিজের Matrix class দিয়ে embeddings", "makemore Part 2 শেষ, hyperparameter tuning", "নিজের dataset বানিয়ে C#-এ makemore চালান", "Experiment চালিয়ে যান", "সপ্তাহের শেখা নোট করুন",
+    "Part 3 — activations, gradients, BatchNorm", "Part 3-এর visualization reproduce করুন (C# থেকে stat print)", "Part 4 — backprop ninja (manual backprop)", "Part 4 exercises", "Part 4 শেষ করুন", "Consolidation — নিজের ভাষায় লিখুন", "ব্লগ পোস্ট লিখুন",
+    "makemore Part 5 (WaveNet)", "Let's build GPT — self-attention পর্যন্ত (Matrix ops)", "Multi-head attention block সম্পূর্ণ করুন", "পুরো C# GPT train করুন (Shakespeare)", "নিজের dataset-এ train করুন", "The Illustrated Transformer পড়ুন", "Attention is All You Need paper পড়ুন",
+    "GPT Tokenizer video শুরু", "C#-এ BPE algorithm নিজে implement করুন", "minbpe exercises করুন", "নিজের টেক্সটে tokenizer train করুন", "Microsoft.ML.Tokenizers (Tiktoken)-এর সাথে তুলনা", "Tokenizer-কে reusable class library বানান", "GitHub-এ push করুন",
+    "nanoGPT repo পড়ুন, তারপর Chapter 8-এর C# pipeline লাইন-বাই-লাইন", "Config ও MemoryMappedFile data pipeline বুঝুন, Shakespeare train", "নিজের dataset প্রস্তুত করুন", "Checkpointing সহ দীর্ঘ training run শুরু", "Training curve পড়তে শিখুন", "Train চালিয়ে যান", "Sample generate করে quality দেখুন",
+    "Gradient accumulation, warmup + cosine LR decay", "Scaling laws (Chinchilla) পড়ুন", "Hyperparameter sweep চালান", "Experiment tracking (LocalExperimentTracker বা HTTP দিয়ে W&B)", "Pretraining vs fine-tuning পার্থক্য", "মডেল improve করুন", "Model card লিখুন",
+    "Llama architecture — RoPE, RMSNorm, SwiGLU", "KV cache বুঝুন ও implement করুন", "Sampling strategies implement করুন", "Raschka বইয়ের প্রাসঙ্গিক chapter", "Phase capstone repo তৈরি করুন", "ব্লগ লিখুন", "Consolidation review",
+    "HttpClient দিয়ে Anthropic Messages API quickstart", "Prompt engineering guide পড়ুন", "Structured output, system prompts (System.Text.Json)", "Error handling, retry, cost হিসাব", "Anthropic Cookbook recipe C#-এ reproduce করুন", "Mini-project: translator CLI শুরু", "Translator CLI শেষ করুন",
+    "Tool use / function calling — প্রথম tool", "Agent loop scratch থেকে লিখুন", "Agent-কে ৩টা tool দিন", "ReAct pattern, error recovery", "Lilian Weng-এর blog post পড়ুন", "Terminal coding assistant শুরু", "Coding assistant শেষ করুন",
+    "Embeddings, cosine similarity নিজে লিখুন", "Chunking strategies implement করুন", "Vector database সেটআপ (Qdrant.Client)", "Retrieval + synthesis + citation", "Hybrid search (BM25) ও reranking", "RAG evaluation করুন", "Eval set বানান",
+    "ASP.NET Core Minimal API দিয়ে full-stack RAG app শুরু", "App build চালিয়ে যান", "Streaming response (SSE), chat history", "Eval harness + rate-limiting middleware যোগ করুন", "Deploy করুন", "Polish + README লিখুন", "Demo ভিডিও বানান",
+    ".NET model ecosystem ঘুরে দেখুন (ONNX Runtime, TorchSharp, HF Hub REST API)", "Parquet.Net দিয়ে dataset, chat templates", "ছোট ONNX model দিয়ে local inference (ONNX Runtime GenAI)", "Hugging Face NLP course chapters", "Full fine-tuning vs LoRA, LoRA paper", "Instruction dataset প্রস্তুত করুন", "Dataset quality check করুন",
+    "প্রথম LoRA fine-tune (TorchSharp LoRALinear)", "QLoRA — .NET-এর gap ও Python-service workaround বুঝুন", "নিজের use-case dataset বানান", "Train করুন — hyperparameter experiment", "Evaluation — আগে vs পরে comparison", "Data quality উন্নত করুন", "Iterate চালিয়ে যান",
+    "RLHF overview (InstructGPT paper)", "DPO — TorchSharp-এ loss implement করুন", "Quantization — ONNX int4/int8, GGUF", "LLamaSharp বা Ollama দিয়ে model serve করুন", "Inference speed benchmark", "Consolidation", "নোট লিখুন",
+    "Fine-tuning capstone শুরু", "Capstone চালিয়ে যান", "Capstone চালিয়ে যান", "Eval suite, base model comparison", "Artifact publish করুন (Hugging Face Hub / NuGet)", "ব্লগ লিখুন", "Review করুন",
+    "modelcontextprotocol.io পড়ুন", "Official C# SDK দিয়ে প্রথম MCP server বানান", "Claude Desktop/Code-এর সাথে test", "বাস্তব API-র MCP integration", "Auth, error handling, best practices", "দরকারি MCP server project শুরু", "Open-source publish করুন (NuGet)",
+    "Building Effective Agents essay পড়ুন", "Planning ও task decomposition", "Multi-agent system বানান (Task.WhenAll worker)", "Computer use / browser automation", "Agent evaluation — trajectory analysis", "বাস্তব multi-step agent project শুরু", "Agent project শেষ করুন",
+    "Context engineering শিখুন", "MemGPT paper, Letta architecture", "নিজের memory layer design করুন", "Memory extraction pipeline", "Memory retrieval + context injection", "Agent-এ memory যোগ করুন", "Session persistence test করুন",
+    "Capabilities capstone শুরু", "Capstone চালিয়ে যান", "Capstone চালিয়ে যান", "Capstone শেষ করুন", "Eval করুন", "Ship করুন", "Demo ভিডিও বানান",
+    "Model serve করুন — .NET থেকে vLLM service call (OpenAI-compatible API)", "Throughput/latency benchmark", "Cost engineering, prompt caching", "Load testing করুন", "Model routing implement করুন", "Capstone-এ serving যোগ করুন", "Review করুন",
+    "Eval philosophy পড়ুন", "নিজের eval harness বানান ([LlmEval] attribute)", "Logging/tracing যোগ করুন (OpenTelemetry .NET)", "Regression testing সেটআপ", "A/B testing ধারণা শিখুন", "Capstone-এ eval + monitoring যোগ", "Review করুন",
+    "Prompt injection বুঝুন", "Guardrails implement করুন", "PII handling, data privacy", "Jailbreak resistance test করুন", "Rate limiting, abuse prevention", "Security review করুন", "Review চালিয়ে যান",
+    "Portfolio polish শুরু", "Polish চালিয়ে যান", "Polish চালিয়ে যান", "Polish শেষ করুন", "GitHub profile (ও NuGet package) সাজান", "Blog series finalize করুন", "সামনের plan লিখুন"
+  ];
+
+  var TOTAL = DAY_TITLES.length; // 168
+  var STORAGE_KEY = "llm_learn_from_scratch_csharp_bn_progress_v1";
+
+  function weekOf(day){ return Math.ceil(day / 7); }
+  function phaseOf(day){ return Math.ceil(weekOf(day) / 4); }
+
+  // ---------- storage ----------
+  var storageOK = true;
+  var done = {};
+  try {
+    var raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) done = JSON.parse(raw);
+  } catch(e){ storageOK = false; }
+
+  function persist(){
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(done)); }
+    catch(e){ storageOK = false; }
+  }
+
+  function isDone(d){ return !!done[d]; }
+  function toggle(d){
+    if (done[d]) delete done[d]; else done[d] = Date.now();
+    persist();
+    render();
+  }
+
+  // ---------- build tabs ----------
+  var tabsEl = document.getElementById("tabs");
+  var activeFilter = "all";
+  function buildTabs(){
+    var html = '<button class="tab" data-active="' + (activeFilter==="all") + '" data-filter="all">সব</button>';
+    PHASES.forEach(function(p){
+      html += '<button class="tab" style="--tab-color:' + p.color + '" data-active="' + (activeFilter==p.id) + '" data-filter="' + p.id + '">Phase ' + p.id + '</button>';
+    });
+    tabsEl.innerHTML = html;
+    tabsEl.querySelectorAll(".tab").forEach(function(btn){
+      btn.addEventListener("click", function(){
+        activeFilter = btn.getAttribute("data-filter") === "all" ? "all" : parseInt(btn.getAttribute("data-filter"),10);
+        render();
+      });
+    });
+  }
+
+  // ---------- render main content ----------
+  var contentEl = document.getElementById("content");
+
+  function findNextDay(){
+    for (var d=1; d<=TOTAL; d++){ if (!isDone(d)) return d; }
+    return null;
+  }
+
+  function render(){
+    buildTabs();
+    var completedCount = Object.keys(done).length;
+    var pct = Math.round((completedCount / TOTAL) * 100);
+    var nextDay = findNextDay();
+
+    document.getElementById("stat-count").textContent = completedCount + " / " + TOTAL;
+    document.getElementById("stat-pct").textContent = pct + "%";
+    document.getElementById("stat-next").textContent = nextDay ? ("Day " + nextDay) : "সম্পূর্ণ";
+    var curPhase = nextDay ? phaseOf(nextDay) : 6;
+    document.getElementById("stat-phase").textContent = "Phase " + Math.min(curPhase,6);
+
+    updateCurve(pct, nextDay);
+
+    var html = "";
+    PHASES.forEach(function(phase){
+      if (activeFilter !== "all" && activeFilter !== phase.id) return;
+      var phaseDays = [];
+      for (var d=1; d<=TOTAL; d++){ if (phaseOf(d) === phase.id) phaseDays.push(d); }
+      var phaseDone = phaseDays.filter(isDone).length;
+      var phasePct = Math.round((phaseDone / phaseDays.length) * 100);
+
+      html += '<section class="phase-block" style="--phase-color:' + phase.color + '">';
+      html += '<div class="phase-head"><span class="phase-chip"></span><h2>Phase ' + phase.id + ' — ' + phase.name + '</h2><span class="phase-progress">' + phaseDone + '/' + phaseDays.length + '</span></div>';
+      html += '<div class="phase-bar"><div class="phase-bar-fill" style="width:' + phasePct + '%"></div></div>';
+
+      var weeksInPhase = {};
+      phaseDays.forEach(function(d){ var w = weekOf(d); (weeksInPhase[w] = weeksInPhase[w] || []).push(d); });
+
+      Object.keys(weeksInPhase).forEach(function(wkKey){
+        var wk = parseInt(wkKey,10);
+        html += '<div class="week"><h3><span class="wk-num">সপ্তাহ ' + wk + '</span> — ' + WEEK_TITLES[wk-1] + '</h3>';
+        weeksInPhase[wk].forEach(function(d){
+          var isNext = (d === nextDay);
+          html += '<div class="day-row" data-done="' + isDone(d) + '" data-next="' + isNext + '" data-day="' + d + '" tabindex="0" role="checkbox" aria-checked="' + isDone(d) + '">';
+          html += '<span class="checkbox"><svg viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4.5" stroke="' + (isDone(d) ? "#10131c" : "none") + '" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>';
+          html += '<span class="day-num">Day ' + d + '</span>';
+          html += '<span class="day-title">' + DAY_TITLES[d-1] + '</span>';
+          html += '</div>';
+        });
+        html += '</div>';
+      });
+      html += '</section>';
+    });
+    contentEl.innerHTML = html;
+
+    contentEl.querySelectorAll(".day-row").forEach(function(row){
+      var d = parseInt(row.getAttribute("data-day"), 10);
+      row.addEventListener("click", function(){ toggle(d); });
+      row.addEventListener("keydown", function(e){
+        if (e.key === "Enter" || e.key === " "){ e.preventDefault(); toggle(d); }
+      });
+    });
+  }
+
+  // ---------- curve ----------
+  var curveFill = document.getElementById("curve-fill");
+  var curveDot = document.getElementById("curve-dot");
+  var curveRing = document.getElementById("curve-dot-ring");
+  var curveLen = curveFill.getTotalLength();
+  curveFill.style.strokeDasharray = curveLen;
+
+  function updateCurve(pct, nextDay){
+    var frac = pct / 100;
+    curveFill.style.strokeDashoffset = curveLen * (1 - frac);
+    var pt = curveFill.getPointAtLength(curveLen * frac);
+    curveDot.setAttribute("cx", pt.x); curveDot.setAttribute("cy", pt.y);
+    curveRing.setAttribute("cx", pt.x); curveRing.setAttribute("cy", pt.y);
+  }
+
+  // ---------- controls ----------
+  document.getElementById("btn-jump").addEventListener("click", function(){
+    var next = findNextDay();
+    if (!next){ alert("অভিনন্দন! সবগুলো দিন সম্পন্ন হয়েছে।"); return; }
+    activeFilter = phaseOf(next);
+    render();
+    setTimeout(function(){
+      var row = contentEl.querySelector('[data-day="' + next + '"]');
+      if (row){ row.scrollIntoView({behavior:"smooth", block:"center"}); row.focus(); }
+    }, 50);
+  });
+
+  document.getElementById("btn-export").addEventListener("click", function(){
+    var blob = new Blob([JSON.stringify(done, null, 2)], {type:"application/json"});
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement("a");
+    a.href = url; a.download = "llm-book-csharp-bangla-progress.json";
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  });
+
+  document.getElementById("btn-import-label").addEventListener("click", function(){
+    document.getElementById("btn-import").click();
+  });
+  document.getElementById("btn-import").addEventListener("change", function(e){
+    var file = e.target.files[0];
+    if (!file) return;
+    var reader = new FileReader();
+    reader.onload = function(ev){
+      try {
+        var imported = JSON.parse(ev.target.result);
+        Object.keys(imported).forEach(function(k){ done[k] = imported[k]; });
+        persist(); render();
+      } catch(err){ alert("Import ব্যর্থ হয়েছে — ফাইলটা ঠিক JSON কিনা যাচাই করুন।"); }
+    };
+    reader.readAsText(file);
+    e.target.value = "";
+  });
+
+  document.getElementById("btn-reset").addEventListener("click", function(){
+    if (confirm("সব progress মুছে ফেলা হবে। নিশ্চিত?")){
+      done = {}; persist(); render();
+    }
+  });
+
+  if (!storageOK){
+    document.getElementById("storage-notice").innerHTML =
+      "⚠️ এই browser-এ localStorage ব্যবহার করা যাচ্ছে না (private/incognito mode বা browser setting-এর কারণে হতে পারে) — progress সংরক্ষণ হবে না এই session-এর বাইরে।";
+  }
+
+  render();
+})();
+</script>
+</body>
+</html>
